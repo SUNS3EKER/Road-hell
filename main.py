@@ -22,9 +22,9 @@ pygame.display.set_caption("Road Hell")
 # Variable to keep our game loop running
 
 carretera = pygame.image.load("./carretera.png")
-carretera2 = pygame.image.load("./carretera2.png")
+carretera2 = pygame.image.load("./carretera.png")
 mar = pygame.image.load("./mar.png")
-mar2 = pygame.image.load("./mar2.png")
+mar2 = pygame.image.load("./mar.png")
 
 velocidadbg = 5.5
 running = True
@@ -40,10 +40,10 @@ ypos = 50
 jugador = pygame.image.load("./player.png")
 #textura del NPCs
 NPCcar = pygame.image.load("./npccar.png")
+NPCcar2 = pygame.image.load("./npccar.png")
 
 carril1 = {
-    "existe":random.choice([False,True]),
-    "posicion":(carreteraxpos,screen.get_height()),
+    "ypos":screen.get_height(),
     "Enemigo":False,
     "modelo":1
 }
@@ -56,16 +56,17 @@ moverabajo = False
 moverD = False
 moverI = False
 velocidad = 4
-# reloj
+# reloj   
+
 reloj = pygame.time.Clock()
 fps = 60
 # game loop
 while running:
 
     reloj.tick(fps)
-    #NPCs#########################################trabajar aqui
-    if carril1["existe"] == True:
-            screen.blit(NPCcar,(carreteraxpos,screen.get_height()))
+
+
+    
 
 
     #movimiento del fondo
@@ -85,7 +86,6 @@ while running:
     # aumento a la posicion del jugador
     if moverD == True:
         xpos += velocidad
-        
     if moverI == True:
         xpos -= velocidad
     if moverarriba == True:
@@ -96,13 +96,13 @@ while running:
     if xpos <= carreteraxpos:
         moverI = False
         xpos = carreteraxpos + 1
-    if ypos <= 0:
+    elif ypos <= 0:
         moverarriba = False
         ypos = 1
-    if (xpos + jugador.get_width()) >= (carreteraxpos+carretera.get_width()):
+    elif (xpos + jugador.get_width()) >= (carreteraxpos+carretera.get_width()):
         moverD = False
         xpos = (carreteraxpos+carretera.get_width()) - jugador.get_width()
-    if (ypos + jugador.get_height()) >= screen.get_height():
+    elif (ypos + jugador.get_height()) >= screen.get_height():
         moverabajo = False
         ypos -= 1
 
@@ -114,8 +114,19 @@ while running:
     screen.blit(mar,(0,marypos))
     screen.blit(mar2,(0,mar2ypos))
     
-    
+        #NPCs#########################################trabajar aqui
+        #la posicion z(capa) de las imagenes depende de cual se blitea primero y ultimo
+
+    carril1["ypos"]-=2
+    if carril1["ypos"]+NPCcar.get_height() == 0:
+        carril1["ypos"] == screen.get_height()
+        print("hola")
+    screen.blit(NPCcar,(carreteraxpos,carril1["ypos"]))
+
+
     screen.blit(jugador, (xpos, ypos))
+
+
     pygame.display.update()
 
     # ciclo de eventos
