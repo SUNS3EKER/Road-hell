@@ -10,9 +10,8 @@ import time
 # Dimensiones de la pnatalla
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
-info = pygame.display.Info()
-screen_width, screen_height = info.current_w, info.current_h
-screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
+
+screen = pygame.display.set_mode((1300,650))
 
 
 # Set the caption of the screen
@@ -28,8 +27,8 @@ mar2 = pygame.image.load("./mar.png")
 
 velocidadbg = 5.5
 running = True
-carreteraxpos = (screen.get_width()/3)
-xpos = carreteraxpos + (carreteraxpos/2)
+carreteraxpos = 0
+xpos = 500
 carreteraypos = 0
 carretera2ypos = 0-screen.get_height()
 marypos = 0
@@ -93,16 +92,16 @@ while running:
     if moverabajo == True:
         ypos += 5
     # colision con los bordes de la pantalla
-    if xpos <= carreteraxpos:
+    if xpos <= 473:
         moverI = False
-        xpos = carreteraxpos + 1
-    elif ypos <= 0:
+        xpos = 473 + 1
+    if ypos <= 0:
         moverarriba = False
         ypos = 1
-    elif (xpos + jugador.get_width()) >= (carreteraxpos+carretera.get_width()):
+    if (xpos + jugador.get_width()) >= 840:
         moverD = False
-        xpos = (carreteraxpos+carretera.get_width()) - jugador.get_width()
-    elif (ypos + jugador.get_height()) >= screen.get_height():
+        xpos = 840 - jugador.get_width()
+    if (ypos + jugador.get_height()) >= screen.get_height():
         moverabajo = False
         ypos -= 1
 
@@ -114,14 +113,8 @@ while running:
     screen.blit(mar,(0,marypos))
     screen.blit(mar2,(0,mar2ypos))
     
-        #NPCs#########################################trabajar aqui
+        #TODO NPCs#########################################trabajar aqui 
         #la posicion z(capa) de las imagenes depende de cual se blitea primero y ultimo
-
-    carril1["ypos"]-=2
-    if carril1["ypos"]+NPCcar.get_height() == 0:
-        carril1["ypos"] == screen.get_height()
-        print("hola")
-    screen.blit(NPCcar,(carreteraxpos,carril1["ypos"]))
 
 
     screen.blit(jugador, (xpos, ypos))
