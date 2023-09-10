@@ -3,9 +3,6 @@
 # import the pygame module
 import pygame
 import os
-import math
-import random
-import time
 
 # Dimensiones de la pnatalla
 os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -13,7 +10,7 @@ pygame.init()
 
 screen = pygame.display.set_mode((1300,650))
 
-
+#todo balas
 # Set the caption of the screen
 pygame.display.set_caption("Road Hell")
 
@@ -25,7 +22,7 @@ carretera2 = pygame.image.load("./carretera.png")
 mar = pygame.image.load("./mar.png")
 mar2 = pygame.image.load("./mar.png")
 
-velocidadbg = 5.5
+velocidadbg = 6
 running = True
 carreteraxpos = 0
 xpos = 500
@@ -41,11 +38,6 @@ jugador = pygame.image.load("./player.png")
 NPCcar = pygame.image.load("./npccar.png")
 NPCcar2 = pygame.image.load("./npccar.png")
 
-carril1 = {
-    "ypos":screen.get_height(),
-    "Enemigo":False,
-    "modelo":1
-}
 
 
 
@@ -54,18 +46,15 @@ moverarriba = False
 moverabajo = False
 moverD = False
 moverI = False
-velocidad = 4
+velocidad = 5
 # reloj   
 
 reloj = pygame.time.Clock()
-fps = 60
-# game loop
+fps = 30
+#* game loop
 while running:
 
     reloj.tick(fps)
-
-
-    
 
 
     #movimiento del fondo
@@ -73,11 +62,11 @@ while running:
     carretera2ypos += velocidadbg
     if carreteraypos > screen.get_height():
       carreteraypos = 0 - screen.get_height()
-    if carretera2ypos > screen.get_height():
+    elif carretera2ypos > screen.get_height():
       carretera2ypos = 0 - screen.get_height()
 
-    marypos += 2
-    mar2ypos += 2
+    marypos += 3
+    mar2ypos += 3
     if marypos > screen.get_height():
      marypos = 0 - screen.get_height()
     if mar2ypos > screen.get_height():
@@ -88,9 +77,9 @@ while running:
     if moverI == True:
         xpos -= velocidad
     if moverarriba == True:
-        ypos -= 4
+        ypos -= 5
     if moverabajo == True:
-        ypos += 5
+        ypos += 6
     # colision con los bordes de la pantalla
     if xpos <= 473:
         moverI = False
